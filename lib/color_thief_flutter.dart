@@ -26,7 +26,7 @@ _createPixelArray(Uint8List imgData, int pixelCount, int quality) {
   return pixelArray;
 }
 
-_validateOptions(int colorCount, int quality) {
+_validateOptions(int? colorCount, int? quality) {
   if (colorCount == null || colorCount.runtimeType != int) {
     colorCount = 10;
   } else {
@@ -49,9 +49,11 @@ Future<Image> getImageFromProvider(ImageProvider imageProvider) async {
     ImageConfiguration(devicePixelRatio: 1.0),
   );
   final Completer<Image> imageCompleter = Completer<Image>();
-  ImageStreamListener listener;
+  ImageStreamListener? listener;
   listener = ImageStreamListener((ImageInfo info, bool synchronousCall) {
-    stream.removeListener(listener);
+   if (listener != null) {
+      stream.removeListener(listener);
+    }
     imageCompleter.complete(info.image);
   });
   stream.addListener(listener);
