@@ -9,10 +9,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  quantize_dart:
-    git:
-      url: https://github.com/JaonFanwt/quantize_dart.git
-      # url: https://github.com/Tudutu/quantize_dart.git
+  # quantize_dart:
+  #   git:
+  #     url: https://github.com/JaonFanwt/quantize_dart.git
 
 dev_dependencies:
   flutter_test:

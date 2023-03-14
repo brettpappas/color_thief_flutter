@@ -99,15 +99,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.2"
-  quantize_dart:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: df0edad36410d6f8c16ae51998092c6cd4d169bb
-      url: "https://github.com/JaonFanwt/quantize_dart.git"
-    source: git
-    version: "1.0.3"
   sky_engine:
     dependency: transitive
     description: flutter
