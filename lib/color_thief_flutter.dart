@@ -42,7 +42,7 @@ _validateOptions(int? colorCount, int? quality) {
 }
 
 /// returns the real Image of ImageProvider
-/// 
+///
 /// `imageProvider` - ImageProvider
 Future<Image> getImageFromProvider(ImageProvider imageProvider) async {
   final ImageStream stream = imageProvider.resolve(
@@ -51,7 +51,7 @@ Future<Image> getImageFromProvider(ImageProvider imageProvider) async {
   final Completer<Image> imageCompleter = Completer<Image>();
   ImageStreamListener? listener;
   listener = ImageStreamListener((ImageInfo info, bool synchronousCall) {
-   if (listener != null) {
+    if (listener != null) {
       stream.removeListener(listener);
     }
     imageCompleter.complete(info.image);
@@ -62,7 +62,7 @@ Future<Image> getImageFromProvider(ImageProvider imageProvider) async {
 }
 
 /// returns the Image from url
-/// 
+///
 /// `url` - url to image
 Future<Image> getImageFromUrl(String url) async {
   final ImageProvider imageProvider = NetworkImage(url);
@@ -71,45 +71,46 @@ Future<Image> getImageFromUrl(String url) async {
 }
 
 /// returns a list that contains the reduced color palette, represented as [[R,G,B]]
-/// 
+///
 /// `image` - Image
-/// 
+///
 /// `colorCount` - Between 2 and 256. The maximum number of colours allowed in the reduced palette
-/// 
+///
 /// `quality` - Between 1 and 10. There is a trade-off between quality and speed. The bigger the number, the faster the palette generation but the greater the likelihood that colors will be missed.
-Future getPaletteFromImage(Image image, [int colorCount, int quality]) async {
-    final options = _validateOptions(colorCount, quality);
-    colorCount = options[0];
-    quality = options[1];
+Future getPaletteFromImage(Image image, [int colorCount = 5, int quality = 10]) async {
+  final options = _validateOptions(colorCount, quality);
+  colorCount = options[0];
+  quality = options[1];
 
-    final imageData  = await image.toByteData(format: ImageByteFormat.rawRgba).then((val) => Uint8List.view((val.buffer)));
-    final pixelCount = image.width * image.height;
+  final imageData =
+      await image.toByteData(format: ImageByteFormat.rawRgba).then((val) => Uint8List.view((val!.buffer)));
+  final pixelCount = image.width * image.height;
 
-    final pixelArray = _createPixelArray(imageData, pixelCount, quality);
+  final pixelArray = _createPixelArray(imageData, pixelCount, quality);
 
-    final cmap = quantize(pixelArray, colorCount);
-    final palette = cmap == null ? null : cmap.palette();
+  final cmap = quantize(pixelArray, colorCount);
+  final palette = cmap == null ? null : cmap.palette();
 
-    return palette;
+  return palette;
 }
 
 /// returns a list that contains the reduced color palette, represented as [[R,G,B]]
-/// 
+///
 /// `url` - url to image
-/// 
+///
 /// `colorCount` - Between 2 and 256. The maximum number of colours allowed in the reduced palette
-/// 
+///
 /// `quality` - Between 1 and 10. There is a trade-off between quality and speed. The bigger the number, the faster the palette generation but the greater the likelihood that colors will be missed.
-Future getPaletteFromUrl(String url, [int colorCount, int quality]) async {
+Future getPaletteFromUrl(String url, [int colorCount = 5, int quality = 10]) async {
   final image = await getImageFromUrl(url);
   final palette = await getPaletteFromImage(image, colorCount, quality);
   return palette;
 }
 
 /// returns the base color from the largest cluster, represented as [R,G,B]
-/// 
+///
 /// `image` - Image
-/// 
+///
 /// `quality` - Between 1 and 10. There is a trade-off between quality and speed. The bigger the number, the faster the palette generation but the greater the likelihood that colors will be missed.
 Future getColorFromImage(Image image, [int quality = 10]) async {
   final palette = await getPaletteFromImage(image, 5, quality);
@@ -121,11 +122,11 @@ Future getColorFromImage(Image image, [int quality = 10]) async {
 }
 
 /// returns the base color from the largest cluster, represented as [R,G,B]
-/// 
+///
 /// `url` - url to image
-/// 
+///
 /// `quality` - Between 1 and 10. There is a trade-off between quality and speed. The bigger the number, the faster the palette generation but the greater the likelihood that colors will be missed.
-Future getColorFromUrl(String url, [int quality]) async {
+Future getColorFromUrl(String url, [int quality = 10]) async {
   final image = await getImageFromUrl(url);
   final dominantColor = await getColorFromImage(image, quality);
   return dominantColor;
