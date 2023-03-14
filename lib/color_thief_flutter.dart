@@ -2,9 +2,8 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
-
 import 'package:flutter/painting.dart';
-import 'package:quantize_dart/quantize_dart.dart';
+import 'quantize_dart.dart';
 
 _createPixelArray(Uint8List imgData, int pixelCount, int quality) {
   final pixels = imgData;
