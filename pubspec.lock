@@ -104,8 +104,8 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: e082204a3ccdb804590b80160e96522f9f95dc73
-      url: "https://github.com/Tudutu/quantize_dart.git"
+      resolved-ref: df0edad36410d6f8c16ae51998092c6cd4d169bb
+      url: "https://github.com/JaonFanwt/quantize_dart.git"
     source: git
     version: "1.0.3"
   sky_engine:
